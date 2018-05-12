@@ -80,6 +80,11 @@ create_bind_cache_dir() {
   chown root:${BIND_USER} /var/cache/bind
 }
 
+create_dhcp_lease_file() {
+  touch /var/lib/dhcp/dhcpd.leases
+  chown root:${DHCP_USER} /var/lib/dhcp/dhcpd.leases
+}
+
 # bind9
 create_bind_pid_dir
 create_bind_data_dir
@@ -87,6 +92,7 @@ create_bind_cache_dir
 #isc-dhcp-server
 create_dhcp_pid_dir
 create_dhcp_data_dir
+create_dhcp_lease_file
 
 # allow arguments to be passed to named
 if [[ ${1:0:1} = '-' ]]; then
