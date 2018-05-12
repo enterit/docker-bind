@@ -2,6 +2,7 @@ FROM sameersbn/ubuntu:16.04.20180124
 MAINTAINER sameer@damagehead.com
 
 ENV BIND_USER=bind \
+    DHCP_USER=dhcpd \
     BIND_VERSION=1:9.10.3 \
     WEBMIN_VERSION=1.8 \
     DATA_DIR=/data
