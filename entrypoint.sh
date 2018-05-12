@@ -76,8 +76,8 @@ if [[ -z ${1} ]]; then
     /etc/init.d/webmin start
   fi
 
-  echo "Starting named..."
-  exec $(which named) -u ${BIND_USER} -g ${EXTRA_ARGS}
+  echo "Starting services..."
+  exec /usr/bin/supervisord -c /etc/supervisord.conf
 else
   exec "$@"
 fi
