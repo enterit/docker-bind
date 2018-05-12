@@ -77,6 +77,7 @@ if [[ -z ${1} ]]; then
   fi
 
   echo "Starting services..."
+  export EXTRA_ARGS
   exec /usr/bin/supervisord -c /etc/supervisord.conf
 else
   exec "$@"
