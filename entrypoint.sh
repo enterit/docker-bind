@@ -3,6 +3,8 @@ set -e
 
 ROOT_PASSWORD=${ROOT_PASSWORD:-password}
 WEBMIN_ENABLED=${WEBMIN_ENABLED:-true}
+BIND_ENABLED=${BIND_ENABLED:-true}
+DHCP_ENABLED=${DHCP_ENABLED:-true}
 
 BIND_DATA_DIR=${DATA_DIR}/bind
 DHCP_DATA_DIR=${DATA_DIR}/dhcp
@@ -117,8 +119,8 @@ if [[ -z ${1} ]]; then
   /usr/bin/supervisord -c /etc/supervisord.conf &
   #wait for supervisor to start
   while ! curl --no-buffer -XGET --unix-socket /supervisor.sock http://localhost/ 1>/dev/null 2>/dev/null; do sleep 0.1; done
-  supervisorctl start named
-  supervisorctl start dhcpd
+  [ "${BIND_ENABLED}"  == "true" ] && supervisorctl start named
+  [ "${DHCP_ENABLED}" == "true" ] && supervisorctl start dhcpd
   exec /usr/bin/pidproxy /supervisord.pid /bin/sleep infinity
 else
   exec "$@"
