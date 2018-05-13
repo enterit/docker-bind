@@ -72,11 +72,6 @@ create_bind_pid_dir() {
   chown root:${BIND_USER} /var/run/named
 }
 
-create_dhcp_pid_dir() {
-  mkdir -m 0775 -p /var/run/dhcp-server
-  chown root:${DHCP_USER} /var/run/dhcp-server
-}
-
 create_bind_cache_dir() {
   mkdir -m 0775 -p /var/cache/bind
   chown root:${BIND_USER} /var/cache/bind
@@ -92,7 +87,6 @@ create_bind_pid_dir
 create_bind_data_dir
 create_bind_cache_dir
 #isc-dhcp-server
-create_dhcp_pid_dir
 create_dhcp_data_dir
 create_dhcp_lease_file
 
