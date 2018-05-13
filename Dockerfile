@@ -3,6 +3,7 @@ MAINTAINER sameer@damagehead.com
 
 ENV BIND_USER=bind \
     DHCP_USER=dhcpd \
+    DHCP_INTERFACES=" " \
     BIND_VERSION=1:9.10.3 \
     WEBMIN_VERSION=1.8 \
     DATA_DIR=/data
