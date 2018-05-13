@@ -117,7 +117,7 @@ if [[ -z ${1} ]]; then
   /usr/bin/supervisord -c /etc/supervisord.conf &
   SUPERVISOR_PID=$!
   #wait for supervisor to start
-  sleep 1
+  while ! curl --no-buffer -XGET --unix-socket /supervisor.sock http://localhost/ 1>/dev/null 2>/dev/null; do sleep 0.1; done
   supervisorctl start named
   supervisorctl start dhcpd
   wait $SUPERVISOR_PID
