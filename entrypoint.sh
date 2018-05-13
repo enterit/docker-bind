@@ -82,10 +82,22 @@ create_dhcp_lease_file() {
   chown root:${DHCP_USER} /var/lib/dhcp/dhcpd.leases
 }
 
+replace_webmin_bind_command() {
+  grep -q "^$1_cmd=" /etc/webmin/bind8/config || echo "$1_cmd=/usr/bin/supervisorctl $1 named" >> /etc/webmin/bind8/config
+  sed -i "s|^$1_cmd=.*|$1_cmd=/usr/bin/supervisorctl $1 named|g" /etc/webmin/bind8/config
+}
+
+configure_webmin_bind_commands() {
+  replace_webmin_bind_command start
+  replace_webmin_bind_command stop
+  replace_webmin_bind_command restart
+}
+
 # bind9
 create_bind_pid_dir
 create_bind_data_dir
 create_bind_cache_dir
+configure_webmin_bind_commands
 #isc-dhcp-server
 create_dhcp_data_dir
 create_dhcp_lease_file
