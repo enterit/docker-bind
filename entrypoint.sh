@@ -50,6 +50,10 @@ create_dhcp_data_dir() {
   ln -sf ${DHCP_DATA_DIR}/lib /var/lib/dhcp
 }
 
+remove_dhcp_pid() {
+  rm -f /var/run/dhcpd.pid
+}
+
 create_webmin_data_dir() {
   mkdir -p ${WEBMIN_DATA_DIR}
   chmod -R 0755 ${WEBMIN_DATA_DIR}
@@ -101,6 +105,7 @@ configure_webmin_bind_commands
 #isc-dhcp-server
 create_dhcp_data_dir
 create_dhcp_lease_file
+remove_dhcp_pid
 
 # allow arguments to be passed to named
 if [[ ${1:0:1} = '-' ]]; then
