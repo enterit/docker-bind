@@ -114,7 +114,13 @@ if [[ -z ${1} ]]; then
 
   echo "Starting services..."
   export EXTRA_ARGS
-  exec /usr/bin/supervisord -c /etc/supervisord.conf
+  /usr/bin/supervisord -c /etc/supervisord.conf &
+  SUPERVISOR_PID=$!
+  #wait for supervisor to start
+  sleep 1
+  supervisorctl start named
+  supervisorctl start dhcpd
+  wait $SUPERVISOR_PID
 else
   exec "$@"
 fi
