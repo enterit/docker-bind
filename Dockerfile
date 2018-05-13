@@ -17,7 +17,8 @@ RUN rm -rf /etc/apt/apt.conf.d/docker-gzip-indexes \
 
 COPY supervisord.conf /etc/supervisord.conf
 COPY entrypoint.sh /sbin/entrypoint.sh
-RUN chmod 755 /sbin/entrypoint.sh
+COPY isc-dhcp-server /etc/init.d/isc-dhcp-server
+RUN chmod 755 /sbin/entrypoint.sh /etc/init.d/isc-dhcp-server
 
 EXPOSE 53/udp 53/tcp 10000/tcp
 ENTRYPOINT ["/sbin/entrypoint.sh"]

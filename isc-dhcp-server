@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/bin/supervisorctl "$1" dhcpd
