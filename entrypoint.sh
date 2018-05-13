@@ -115,12 +115,11 @@ if [[ -z ${1} ]]; then
   echo "Starting services..."
   export EXTRA_ARGS
   /usr/bin/supervisord -c /etc/supervisord.conf &
-  SUPERVISOR_PID=$!
   #wait for supervisor to start
   while ! curl --no-buffer -XGET --unix-socket /supervisor.sock http://localhost/ 1>/dev/null 2>/dev/null; do sleep 0.1; done
   supervisorctl start named
   supervisorctl start dhcpd
-  wait $SUPERVISOR_PID
+  exec /usr/bin/pidproxy /supervisord.pid /bin/sleep infinity
 else
   exec "$@"
 fi
